@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('owners', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
-            $table->string('name');
-            $table->string('phone');
+            $table->string('Voornaam');
+            $table->string('Tussenvoegsel');
+            $table->string('Achternaam');
+            $table->string('Emailadres');
+            $table->string('Telefoonnummer');
+            $table->string('Woonplaats');
+            $table->string('Straat');
+            $table->string('Huisnummer');
+            $table->string('Postcode');
             $table->timestamps();
         });
     }

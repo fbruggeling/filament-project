@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
 use App\Models\Patient;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -39,24 +40,14 @@ class PatientResource extends Resource
                     ->required()
                     ->maxDate(now()),
                 Forms\Components\Select::make('owner_id')
-                    ->relationship('owner', 'name')
+                    ->formatStateUsing(function ($state, Order $order) {
+                        return $order->owner->Voornaam. ' '. $order->owner->Tussenvoegsel. ' '. $order->owner->Achternaam;
+                    })
+                    ->relationship('owner', 'Voornaam'i)
                     ->searchable()
                     ->preload()
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
-                            ->label('Email address')
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
-                            ->label('phone number')
-                            ->tel()
-                            ->required(),
-                    ])
                     ->required(),
+    
             ]);
     }
 
@@ -69,8 +60,8 @@ class PatientResource extends Resource
                 Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('owner.name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('owner.voornaam'),
+                Tables\Columns\TextColumn::make('owner.achternaam')
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
