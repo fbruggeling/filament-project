@@ -40,13 +40,14 @@ class PatientResource extends Resource
                     ->required()
                     ->maxDate(now()),
                 Forms\Components\Select::make('owner_id')
-                    ->formatStateUsing(function ($state, Order $order) {
-                        return $order->owner->Voornaam. ' '. $order->owner->Tussenvoegsel. ' '. $order->owner->Achternaam;
+                    ->label('Eigenaar')
+                    ->formatStateUsing(function ($state, Patient $patient) {
+                        return $patient->owner->Voornaam . ' ' . $patient->owner->Tussenvoegsel . ' ' . $patient->owner->Achternaam;
                     })
-                    ->relationship('owner', 'Voornaam'i)
                     ->searchable()
                     ->preload()
                     ->required(),
+                
     
             ]);
     }
@@ -60,8 +61,11 @@ class PatientResource extends Resource
                 Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('owner.voornaam'),
-                Tables\Columns\TextColumn::make('owner.achternaam')
+                Tables\Columns\TextColumn::make('owner.Voornaam')
+                    ->label('Eigenaar')
+                    ->formatStateUsing(function ($state, Patient $patient) {
+                        return $patient->owner->Voornaam . ' ' . $patient->owner->Tussenvoegsel . ' ' . $patient->owner->Achternaam;
+                    }),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
@@ -86,7 +90,7 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\TreatmentsRelationManager::class,
+            //
         ];
     }
 

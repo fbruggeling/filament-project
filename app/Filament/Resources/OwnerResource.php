@@ -61,10 +61,10 @@ class OwnerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('Voornaam')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('Tussenvoegsel')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('Achternaam')
+                    ->label('Naam')
+                    ->formatStateUsing(function ($state, Owner $owner) {
+                        return $owner->Voornaam . ' ' . $owner->Tussenvoegsel . ' ' . $owner->Achternaam;
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('Emailadres')
                     ->searchable(),

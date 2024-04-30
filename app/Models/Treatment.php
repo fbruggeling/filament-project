@@ -16,8 +16,8 @@ class Treatment extends Model
         'price' => MoneyCast::class,
     ];
 
-    public function patient(): BelongsTo
+    public function patient(): HasMany
     {
-        return $this->belongsTo(Patient::class);
+        return $this->Hasmany(Patient::class);
     }
 }
