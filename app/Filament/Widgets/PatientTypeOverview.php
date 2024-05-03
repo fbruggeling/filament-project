@@ -11,11 +11,11 @@ class PatientTypeOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Cats', Patient::query()->where('type', 'cat')->count()),
-            Stat::make('Dogs', Patient::query()->where('type', 'dog')->count()),
-            Stat::make('Rabbits', Patient::query()->where('type', 'rabbit')->count()),
-            Stat::make('Fish', Patient::query()->where('type', 'fish')->count()),
-            Stat::make('Other', Patient::query()->where('type', 'other')->count()),
+            // Stat::make('Katten', Patient::query()->where('type', 'kat')->count()),
+            // Stat::make('Honden', Patient::query()->where('type', 'hond')->count()),
+            // Stat::make('Konijnen', Patient::query()->where('type', 'konijn')->count()),
+            // Stat::make('Vissen', Patient::query()->where('type', 'fish')->count()),
+            // Stat::make('Other', Patient::query()->where('type', 'other')->count()),
         ];
     }
 }

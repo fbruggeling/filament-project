@@ -11,10 +11,10 @@ class Diertype extends Model
 {
     use HasFactory;
 
-    // public function dierras(): HasMany 
-    // {
-    //     return $this->hasMany(Dierras::class);
-    // }
+    public function dierras(): HasMany 
+    {
+        return $this->hasMany(Dierras::class);
+    }
 
     public function patients(): HasOne
     {

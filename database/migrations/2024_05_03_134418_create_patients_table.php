@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('owner_id')->constrained('owners')->cascadeOnDelete();
             $table->foreignId('diertype_id')->constrained('diertypes')->cascadeOnDelete();
+            $table->foreignId('dierras_id')->constrained('dierras')->cascadeOnDelete();
             $table->timestamps();
         });
     }

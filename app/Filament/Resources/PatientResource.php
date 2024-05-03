@@ -63,16 +63,16 @@ class PatientResource extends Resource
                                 ->maxLength(255),
                         ])
                         ->required(),
-                    // Select::make('dierras_id')
-                    //         ->label('Ras')
-                    //         ->relationship('dierras', 'ras')
-                    //         ->preload()
-                    //         ->createOptionForm([
-                    //             TextInput::make('ras')
-                    //                 ->required()
-                    //                 ->maxLength(255),
-                    //         ])
-                    //         ->required(),
+                    Select::make('dierras_id')
+                            ->label('Ras')
+                            ->relationship('dierras', 'name')
+                            ->preload()
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                            ])
+                            ->required(),
                 ]),
             ]);
     }
