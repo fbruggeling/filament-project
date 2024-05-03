@@ -12,6 +12,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DatePicker;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Forms\Components\Section;
 
 class OwnerResource extends Resource
 {
@@ -23,33 +30,33 @@ class OwnerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('Voornaam')
+                TextInput::make('Voornaam')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('Tussenvoegsel')
+                TextInput::make('Tussenvoegsel')
                     ->maxLength(3),
-                Forms\Components\TextInput::make('Achternaam')
+                TextInput::make('Achternaam')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('Emailadres')
+                TextInput::make('Emailadres')
                     ->required()
                     ->email()
                     ->label('Email Adres')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('Telefoonnummer')
+                TextInput::make('Telefoonnummer')
                     ->label('Telefoonnummer')
                     ->tel()
                     ->required(),
-                Forms\Components\TextInput::make('Woonplaats')
+                TextInput::make('Woonplaats')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('Straat')
+                TextInput::make('Straat')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('Huisnummer')
+                TextInput::make('Huisnummer')
                     ->required()
                     ->maxLength(3),
-                Forms\Components\TextInput::make('Postcode')
+                TextInput::make('Postcode')
                     ->required()
                     ->maxLength(6),
                 
@@ -95,7 +102,7 @@ class OwnerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\PatientsRelationManager::class,
         ];
     }
 

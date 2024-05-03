@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Patient;
+use App\Models\Treatment;
 
 return new class extends Migration
 {
@@ -11,11 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('treatments', function (Blueprint $table) {
+        Schema::create('patient-treatment', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->text('notes')->nullable();
-            $table->unsignedBigInteger('price')->nullable();
+            $table->foreignIdFor(Patient::class);
+            $table->foreignIdFor(Treatment::class);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('treatments');
+        Schema::dropIfExists('patient-treatment');
     }
 };

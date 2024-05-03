@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('owners', function (Blueprint $table) {
             $table->id();
             $table->string('Voornaam');
-            $table->string('Tussenvoegsel');
+            $table->string('Tussenvoegsel')->nullable();
             $table->string('Achternaam');
             $table->string('Emailadres');
             $table->string('Telefoonnummer');

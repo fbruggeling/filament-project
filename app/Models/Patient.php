@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\BelongsToManyRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Patient extends Model
 {
@@ -16,8 +17,13 @@ class Patient extends Model
         return $this->belongsTo(Owner::class);
     }
 
-    public function treatments(): BelongsTo
+    public function treatments(): BelongsToMany
     {
-        return $this->belongsTo(Treatment::class);
+        return $this->belongsToMany(Treatment::class, 'patient-treatment')->withTimestamps();
+    }
+
+    public function diertype(): BelongsTo
+    {
+        return $this->belongsTo(Diertype::class);
     }
 }

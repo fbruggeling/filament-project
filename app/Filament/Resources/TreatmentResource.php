@@ -24,16 +24,24 @@ class TreatmentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('description')
+                    ->label('Behandeling')
                     ->required()
                     ->maxLength(255)
                     ->columnSpan('full'),
                 Forms\Components\Textarea::make('notes')
+                    ->label('Beschrijving')
                     ->maxLength(65535)
                     ->columnSpan('full'),
                 Forms\Components\TextInput::make('price')
+                    ->label('Prijs')
                     ->numeric()
                     ->prefix('€')
                     ->maxValue(42949672.95),
+                Forms\Components\TextInput::make('duration')
+                    ->label('Behandeltijd')
+                    ->suffix('Minuten')
+                    ->numeric()
+                    ->required(),
             ]);
     }
 
@@ -41,15 +49,23 @@ class TreatmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Behandeling'),
                 Tables\Columns\TextColumn::make('price')
+                    ->label('Prijs')
                     ->money('EUR')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('duration')
+                    ->label('Behandeltijd')
+                    ->suffix(' Minuten')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Aangemaakt op')
                     ->dateTime(),
             ])
             ->filters([
-                //
+                
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

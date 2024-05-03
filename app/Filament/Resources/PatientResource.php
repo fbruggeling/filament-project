@@ -13,6 +13,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DatePicker;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Forms\Components\Section;
+
 
 class PatientResource extends Resource
 {
@@ -24,31 +32,48 @@ class PatientResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
+                    ->label('Naam')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('type')
-                    ->options([
-                        'cat' => 'Cat',
-                        'dog' => 'Dog',
-                        'rabbit' => 'Rabbit',
-                        'fish' => 'Fish',
-                        'other' => 'Other',
-                    ])
-                    ->required(),
-                Forms\Components\DatePicker::make('date_of_birth')
+                    ->maxLength(255)
+                    ->columnSpan('full'),
+                DatePicker::make('date_of_birth')
+                    ->label('Geboortedatum')
                     ->required()
                     ->maxDate(now()),
-                Forms\Components\Select::make('owner_id')
+                Select::make('owner_id')
                     ->label('Eigenaar')
-                    ->formatStateUsing(function ($state, Patient $patient) {
-                        return $patient->owner->Voornaam . ' ' . $patient->owner->Tussenvoegsel . ' ' . $patient->owner->Achternaam;
-                    })
+                    ->relationship('owner', 'Voornaam')
+                    // ->formatStateUsing(function ($state, Patient $patient) {
+                    //     return $patient->owner->Voornaam . ' ' . $patient->owner->Tussenvoegsel . ' ' . $patient->owner->Achternaam;
+                    // })
                     ->searchable()
                     ->preload()
-                    ->required(),
-                
-    
+                    ->required(),    
+                Section::make('Type & Ras')
+                ->schema([
+                    Select::make('diertype_id')
+                        ->label('Type')
+                        ->relationship('diertype', 'type')
+                        ->placeholder('Selecteer een type')
+                        ->preload()
+                        ->createOptionForm([
+                            TextInput::make('type')
+                                ->required()
+                                ->maxLength(255),
+                        ])
+                        ->required(),
+                    // Select::make('dierras_id')
+                    //         ->label('Ras')
+                    //         ->relationship('dierras', 'ras')
+                    //         ->preload()
+                    //         ->createOptionForm([
+                    //             TextInput::make('ras')
+                    //                 ->required()
+                    //                 ->maxLength(255),
+                    //         ])
+                    //         ->required(),
+                ]),
             ]);
     }
 
@@ -56,26 +81,23 @@ class PatientResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
+                    ->label('Naam')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('date_of_birth')
+                TextColumn::make('diertype.type')
+                    ->label('Type'),
+                TextColumn::make('date_of_birth')
+                    ->label('Geboortedatum')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('owner.Voornaam')
+                TextColumn::make('owner.id')
                     ->label('Eigenaar')
                     ->formatStateUsing(function ($state, Patient $patient) {
                         return $patient->owner->Voornaam . ' ' . $patient->owner->Tussenvoegsel . ' ' . $patient->owner->Achternaam;
                     }),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('type')
-                    ->options([
-                        'cat' => 'Cat',
-                        'dog' => 'Dog',
-                        'rabbit' => 'Rabbit',
-                        'fish' => 'Fish',
-                        'other' => 'Other',
-                    ]),
+                SelectFilter::make('diertype.type')
+                    
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -90,7 +112,7 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TreatmentsRelationManager::class,
         ];
     }
 
