@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('date_of_birth');
             $table->string('name');
+            $table->string('status');
             $table->foreignId('owner_id')->constrained('owners')->cascadeOnDelete();
             $table->foreignId('diertype_id')->constrained('diertypes')->cascadeOnDelete();
             $table->foreignId('dierras_id')->constrained('dierras')->cascadeOnDelete();

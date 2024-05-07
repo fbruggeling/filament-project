@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
+use App\Models\dierras;
+use App\Models\diertype;
 use App\Models\Patient;
 use Closure;
 use Filament\Forms;
@@ -49,24 +51,51 @@ class PatientResource extends Resource
                     // })
                     ->searchable()
                     ->preload()
-                    ->required(),    
+                    ->required(),
+                Select::make('status')
+                  ->label('Status')
+                  ->placeholder('Selecteer een status')
+                  ->options([
+                      'gezond' => 'Gezond',
+                      'in behandeling' => 'In behandeling',
+                      'afgemeld' => 'Afgemeld',
+                  ])
+                  ->required(),
                 Section::make('Type & Ras')
                 ->schema([
                     Select::make('diertype_id')
                         ->label('Type')
                         ->relationship('diertype', 'type')
                         ->placeholder('Selecteer een type')
+                        ->options(diertype::pluck('type', 'id'))
                         ->preload()
+                        ->live()
                         ->createOptionForm([
                             TextInput::make('type')
+                                ->label('Type Dier')
                                 ->required()
-                                ->maxLength(255),
+                                ->maxLength(255)
+                                ->columnSpan('full'),
                         ])
                         ->required(),
                     Select::make('dierras_id')
                             ->label('Ras')
+                            ->placeholder('Selecteer een ras/soort')
                             ->relationship('dierras', 'ras')
-                            ->preload()
+                            ->options(fn(forms\Get $get) => dierras::where('diertype_id', $get('diertype_id'))->pluck('ras', 'id'))
+                            ->disabled(fn(forms\Get $get) : bool => ! filled($get('diertype_id')))
+                            ->createOptionForm([
+                                TextInput::make('ras')
+                                    ->label('Ras')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->columnSpan('full'),
+                                Select::make('diertype_id')
+                                    ->label('Type Dier')
+                                    ->relationship('diertype', 'type')
+                                    ->placeholder('Selecteer een type dier')
+                                    ->required(),
+                            ])
                             ->required(),
                 ]),
             ]);
@@ -81,6 +110,8 @@ class PatientResource extends Resource
                     ->searchable(),
                 TextColumn::make('diertype.type')
                     ->label('Type'),
+                TextColumn::make('dierras.ras')
+                    ->label('Ras/Soort'),
                 TextColumn::make('date_of_birth')
                     ->label('Geboortedatum')
                     ->sortable(),
@@ -91,7 +122,8 @@ class PatientResource extends Resource
                     }),
             ])
             ->filters([
-                SelectFilter::make('diertype.type')
+                SelectFilter::make('diertype.type'),
+                SelectFilter::make('dierras.ras')
                     
             ])
             ->actions([
