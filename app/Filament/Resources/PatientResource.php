@@ -65,13 +65,8 @@ class PatientResource extends Resource
                         ->required(),
                     Select::make('dierras_id')
                             ->label('Ras')
-                            ->relationship('dierras', 'name')
+                            ->relationship('dierras', 'ras')
                             ->preload()
-                            ->createOptionForm([
-                                TextInput::make('name')
-                                    ->required()
-                                    ->maxLength(255),
-                            ])
                             ->required(),
                 ]),
             ]);

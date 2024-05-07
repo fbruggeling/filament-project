@@ -24,6 +24,11 @@ class Patient extends Model
 
     public function diertype(): BelongsTo
     {
-        return $this->belongsTo(Diertype::class);
+        return $this->belongsTo(diertype::class);
+    }
+
+    public function dierras(): BelongsTo
+    {
+        return $this->belongsTo(dierras::class);
     }
 }

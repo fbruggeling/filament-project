@@ -19,8 +19,24 @@ class TreatmentsRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\TextInput::make('description')
+                    ->label('Behandeling')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpan('full'),
+                Forms\Components\Textarea::make('notes')
+                    ->label('Beschrijving')
+                    ->maxLength(65535)
+                    ->columnSpan('full'),
+                Forms\Components\TextInput::make('price')
+                    ->label('Prijs')
+                    ->numeric()
+                    ->prefix('€')
+                    ->maxValue(42949672.95),
+                Forms\Components\TextInput::make('duration')
+                    ->label('Behandeltijd')
+                    ->suffix('Minuten')
+                    ->numeric()
+                    ->required(),
             ]);
     }
 
@@ -47,10 +63,11 @@ class TreatmentsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
+                Tables\Actions\CreateAction::make(),
                 Tables\Actions\AttachAction::make(),
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
                 Tables\Actions\DetachAction::make(),
             ])

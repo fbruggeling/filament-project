@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('dierras', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('ras');
+            $table->foreignId('diertype_id')->constrained('diertypes')->cascadeOnDelete();
             $table->timestamps();
         });
     }
