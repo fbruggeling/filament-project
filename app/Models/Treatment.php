@@ -8,17 +8,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Casts\MoneyCast;
+// use Spatie\Translatable\HasTranslations;
 
 class Treatment extends Model
 {
     use HasFactory;
 
+    // use HasTranslations;
+
+    // public $translatable = ['treatment, notes, price, created_at'];
+
     protected $casts = [
         'price' => MoneyCast::class,
     ];
 
-    public function patients(): BelongsToMany
+    public function animals(): BelongsToMany
     {
-        return $this->belongsToMany(Patient::class, 'patient-treatment')->withTimestamps();
+        return $this->belongsToMany(Animal::class, 'animal-treatment')->withTimestamps();
     }
 }

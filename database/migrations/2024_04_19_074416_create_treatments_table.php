@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('treatments', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->string('treatment');
             $table->text('notes')->nullable();
             $table->unsignedBigInteger('price')->nullable();
             $table->integer('duration');
@@ -27,6 +27,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('treatments');
-        Schema::dropIfExists('patient-treatment');
+        Schema::dropIfExists('animal-treatment');
     }
 };

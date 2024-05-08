@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+// use Filament\Resources\Concerns\Translatable;
 
 class TreatmentResource extends Resource
 {
@@ -19,27 +20,39 @@ class TreatmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    // protected static ?string $title = 'Behandelingen';
+
+    // protected static ?string $navigationLabel = 'Behandelingen';
+
+    // protected static ?string $slug = 'behandelingen';
+
+    // protected ?string $heading = 'Behandelingen';
+
+    // protected ?string $subheading = 'Behandelingen';
+
+    // use Translatable;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('description')
-                    ->label('Behandeling')
+                Forms\Components\TextInput::make('treatment')
+                    // ->label('Behandeling')
                     ->required()
                     ->maxLength(255)
                     ->columnSpan('full'),
                 Forms\Components\Textarea::make('notes')
-                    ->label('Beschrijving')
+                    // ->label('Beschrijving')
                     ->maxLength(65535)
                     ->columnSpan('full'),
                 Forms\Components\TextInput::make('price')
-                    ->label('Prijs')
+                    // ->label('Prijs')
                     ->numeric()
                     ->prefix('€')
                     ->maxValue(42949672.95),
                 Forms\Components\TextInput::make('duration')
-                    ->label('Behandeltijd')
-                    ->suffix('Minuten')
+                    // ->label('Behandeltijd')
+                    ->suffix('Minutes')
                     ->numeric()
                     ->required(),
             ]);
@@ -49,19 +62,19 @@ class TreatmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('description')
-                    ->label('Behandeling'),
+                Tables\Columns\TextColumn::make('treatment'),
+                    // ->label('Behandeling'),
                 Tables\Columns\TextColumn::make('price')
-                    ->label('Prijs')
+                    // ->label('Prijs')
                     ->money('EUR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('duration')
-                    ->label('Behandeltijd')
-                    ->suffix(' Minuten')
+                    // ->label('Behandeltijd')
+                    ->suffix(' Minutes')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Aangemaakt op')
+                    // ->label('Aangemaakt op')
                     ->dateTime(),
             ])
             ->filters([
@@ -92,4 +105,14 @@ class TreatmentResource extends Resource
             'edit' => Pages\EditTreatment::route('/{record}/edit'),
         ];
     }
+
+    // public static function getModelLabel(): string
+    // {
+    //     return __('Treatment');
+    // }
+
+    // public static function getPluralModelLabel(): string
+    // {
+    //     return __('Treatments');
+    // }
 }

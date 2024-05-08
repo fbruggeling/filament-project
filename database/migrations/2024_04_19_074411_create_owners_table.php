@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('owners', function (Blueprint $table) {
             $table->id();
-            $table->string('Voornaam');
-            $table->string('Tussenvoegsel')->nullable();
-            $table->string('Achternaam');
-            $table->string('Emailadres');
-            $table->string('Telefoonnummer');
-            $table->string('Woonplaats');
-            $table->string('Straat');
-            $table->string('Huisnummer');
-            $table->string('Postcode');
+            $table->string('first_name');
+            $table->string('preposition')->nullable();
+            $table->string('last_name');
+            $table->string('email');
+            $table->string('phone_number');
+            $table->string('city');
+            $table->string('street');
+            $table->string('house_number');
+            $table->string('postal_code');
             $table->timestamps();
         });
     }

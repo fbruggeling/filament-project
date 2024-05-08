@@ -51,15 +51,15 @@ class OwnerSeeder extends Seeder
             $usedAddresses[] = $randomAddressKey;
 
             DB::table('owners')->insert([
-                'Voornaam' => $randomVoornaam,
-                'Tussenvoegsel' => null, // Hier kan je logica toevoegen om een willekeurig tussenvoegsel te kiezen
-                'Achternaam' => $randomAchternaam,
-                'Emailadres' => strtolower($randomVoornaam) . '@example.com',
-                'Telefoonnummer' => '06' . mt_rand(10000000, 99999999), // Genereer een willekeurig telefoonnummer
-                'Woonplaats' => $randomAddress[0],
-                'Straat' => $randomAddress[1],
-                'Huisnummer' => $randomAddress[2],
-                'Postcode' => $randomAddress[3],
+                'first_name' => $randomVoornaam,
+                'preposition' => null, // Hier kan je logica toevoegen om een willekeurig tussenvoegsel te kiezen
+                'last_name' => $randomAchternaam,
+                'email' => strtolower($randomVoornaam) . '@example.com',
+                'phone_number' => '06' . mt_rand(10000000, 99999999), // Genereer een willekeurig telefoonnummer
+                'city' => $randomAddress[0],
+                'street' => $randomAddress[1],
+                'house_number' => $randomAddress[2],
+                'postal_code' => $randomAddress[3],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

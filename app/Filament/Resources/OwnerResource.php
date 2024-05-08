@@ -19,46 +19,59 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Section;
+// use Filament\Resources\Concerns\Translatable;
 
 class OwnerResource extends Resource
 {
     protected static ?string $model = Owner::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    
+    // protected static ?string $title = 'Eigenaren';
+
+    // protected static ?string $navigationLabel = 'Eigenaren';
+
+    // protected static ?string $slug = 'eigenaren';
+
+    // protected ?string $heading = 'Eigenaren';
+
+    // protected ?string $subheading = 'Eigenaren';
+
+    // use Translatable;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('Voornaam')
+                TextInput::make('first_name')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('Tussenvoegsel')
+                TextInput::make('preposition')
                     ->maxLength(3),
-                TextInput::make('Achternaam')
+                TextInput::make('last_name')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('Emailadres')
+                TextInput::make('email')
                     ->required()
                     ->email()
-                    ->label('Email Adres')
+                    // ->label('Email Adres')
                     ->maxLength(255),
-                TextInput::make('Telefoonnummer')
-                    ->label('Telefoonnummer')
+                TextInput::make('phone_number')
+                    // ->label('Telefoonnummer')
                     ->tel()
                     ->required(),
-                TextInput::make('Woonplaats')
+                TextInput::make('street')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('Straat')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('Huisnummer')
+                TextInput::make('house_number')
                     ->required()
                     ->maxLength(3),
-                TextInput::make('Postcode')
+                TextInput::make('postal_code')
                     ->required()
                     ->maxLength(6),
+                TextInput::make('city')
+                    ->required()
+                    ->maxLength(255),
                 
             ]);
     }
@@ -67,23 +80,23 @@ class OwnerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('Voornaam')
-                    ->label('Naam')
+                Tables\Columns\TextColumn::make('first_name')
+                    ->label('Name')
                     ->formatStateUsing(function ($state, Owner $owner) {
-                        return $owner->Voornaam . ' ' . $owner->Tussenvoegsel . ' ' . $owner->Achternaam;
+                        return $owner->first_name . ' ' . $owner->preposition . ' ' . $owner->last_name;
                     })
                     ->searchable(),
-                Tables\Columns\TextColumn::make('Emailadres')
+                Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('Telefoonnummer')
+                Tables\Columns\TextColumn::make('phone_number')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('Woonplaats')
+                Tables\Columns\TextColumn::make('city')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('Straat')
+                Tables\Columns\TextColumn::make('street')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('Huisnummer')
+                Tables\Columns\TextColumn::make('house_number')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('Postcode')
+                Tables\Columns\TextColumn::make('postal_code')
                     ->searchable(),
             ])
             ->filters([
@@ -102,7 +115,7 @@ class OwnerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\PatientsRelationManager::class,
+            RelationManagers\AnimalsRelationManager::class,
         ];
     }
 
@@ -114,4 +127,14 @@ class OwnerResource extends Resource
             'edit' => Pages\EditOwner::route('/{record}/edit'),
         ];
     }
+
+    // public static function getModelLabel(): string
+    // {
+    //     return __('Owner');
+    // }
+
+    // public static function getPluralModelLabel(): string
+    // {
+    //     return __('Owners');
+    // }
 }

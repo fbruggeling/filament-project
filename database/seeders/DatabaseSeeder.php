@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Animal;
 use App\Models\Treatment;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -24,8 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(OwnerSeeder::class);
         $this->call(TreatmentSeeder::class);
-        $this->call(DiertypeSeeder::class);
-        $this->call(DierrasSeeder::class);
-        $this->call(PatientSeeder::class);
+        $this->call(TypeSeeder::class);
+        $this->call(BreedSeeder::class);
+        $this->call(AnimalSeeder::class);
     }
 }
