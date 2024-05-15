@@ -40,6 +40,6 @@ class Animal extends Model
 
     public function consults(): BelongsToMany
     {
-        return $this->belongsToMany(Consult::class);
+        return $this->belongsToMany(Consult::class, 'animal-consult')->withTimestamps();
     }
 }

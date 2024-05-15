@@ -31,7 +31,10 @@ class AnimalsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type'),
+                Tables\Columns\TextColumn::make('type.type')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('breed.breed')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->sortable(),
             ])

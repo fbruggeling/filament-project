@@ -39,11 +39,11 @@ class AnimalsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('date_of_birth')
                     // ->label('Geboortedatum')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('owner.id')
-                    // ->label('Eigenaar')
-                    ->formatStateUsing(function ($state, Animal $patient) {
-                        return $patient->owner->first_name . ' ' . $patient->owner->preposition . ' ' . $patient->owner->last_name;
-                    }),
+                // Tables\Columns\TextColumn::make('owner.id')
+                //     // ->label('Eigenaar')
+                //     ->formatStateUsing(function ($state, Animal $patient) {
+                //         return $patient->owner->first_name . ' ' . $patient->owner->preposition . ' ' . $patient->owner->last_name;
+                //     }),
             ])
             ->filters([
                 //
