@@ -23,8 +23,6 @@ class Animal extends Model
         return $this->belongsTo(Owner::class);
     }
 
-  
-
     public function treatments(): BelongsToMany
     {
         return $this->belongsToMany(Treatment::class, 'animal-treatment')->withTimestamps();
@@ -38,5 +36,10 @@ class Animal extends Model
     public function breed(): BelongsTo
     {
         return $this->belongsTo(Breed::class);
+    }
+
+    public function consults(): BelongsToMany
+    {
+        return $this->belongsToMany(Consult::class);
     }
 }

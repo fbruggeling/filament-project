@@ -18,6 +18,7 @@ class AnimalSeeder extends Seeder
 
         // Array van willekeurige statussen
         $statussen = ['Gezond', 'In behandeling', 'Afgemeld'];
+        $genders = ['male', 'female'];
 
         // Willekeurige geboortedata genereren (tussen 1 en 15 jaar geleden)
         $startDate = strtotime("-15 years");
@@ -35,6 +36,7 @@ class AnimalSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $randomVoornaam = $voornamen[array_rand($voornamen)];
             $randomStatus = $statussen[array_rand($statussen)];
+            $randomGender = $genders[array_rand($genders)];
             $randomGeboortedatum = date('Y-m-d', mt_rand($startDate, $endDate));
 
             // Willekeurig diertype selecteren
@@ -48,6 +50,7 @@ class AnimalSeeder extends Seeder
                 'date_of_birth' => $randomGeboortedatum,
                 'name' => $randomVoornaam,
                 'status' => $randomStatus,
+                'gender' => $randomGender,
                 'owner_id' => mt_rand(1, 10), // Willekeurige eigenaar ID tussen 1 en 10
                 'type_id' => $diertypeId,
                 'breed_id' => $dierrasId,

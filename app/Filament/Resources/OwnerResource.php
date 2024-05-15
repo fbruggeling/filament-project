@@ -51,6 +51,14 @@ class OwnerResource extends Resource
                 TextInput::make('last_name')
                     ->required()
                     ->maxLength(255),
+                Select::make('gender')
+                    ->placeholder('Select a gender')
+                    ->options([
+                        'male' => 'Male',
+                        'female' => 'Female',
+                        'other' => 'Other',
+                    ])
+                    ->required(),
                 TextInput::make('email')
                     ->required()
                     ->email()

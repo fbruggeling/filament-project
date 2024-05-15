@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('preposition')->nullable();
             $table->string('last_name');
+            $table->string('gender');
             $table->string('email');
             $table->string('phone_number');
             $table->string('city');

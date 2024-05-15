@@ -20,4 +20,9 @@ class Owner extends Model
     {
         return $this->hasMany(Animal::class);
     }
+
+    public function consult(): HasMany
+    {
+        return $this->hasMany(Consult::class);
+    }
 }

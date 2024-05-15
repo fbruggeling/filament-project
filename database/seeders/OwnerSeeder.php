@@ -33,6 +33,10 @@ class OwnerSeeder extends Seeder
             ['Amersfoort', 'Langestraat', '90', '8901ST']
         ];
 
+        $genders = [
+            'male', 'female', 'other'
+        ];
+
         // Houd bij welke adressen al gebruikt zijn
         $usedAddresses = [];
 
@@ -40,6 +44,7 @@ class OwnerSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $randomVoornaam = $voornamen[array_rand($voornamen)];
             $randomAchternaam = $achternamen[array_rand($achternamen)];
+            $randomgender= $genders[array_rand($genders)];
 
             // Controleer of het adres al in gebruik is
             do {
@@ -54,6 +59,7 @@ class OwnerSeeder extends Seeder
                 'first_name' => $randomVoornaam,
                 'preposition' => null, // Hier kan je logica toevoegen om een willekeurig tussenvoegsel te kiezen
                 'last_name' => $randomAchternaam,
+                'gender' => $randomgender,
                 'email' => strtolower($randomVoornaam) . '@example.com',
                 'phone_number' => '06' . mt_rand(10000000, 99999999), // Genereer een willekeurig telefoonnummer
                 'city' => $randomAddress[0],

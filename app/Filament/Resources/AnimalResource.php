@@ -52,6 +52,13 @@ class AnimalResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->columnSpan('full'),
+                    Select::make('gender')
+                    ->placeholder('Select a gender')
+                    ->options([
+                        'male' => 'Male',
+                        'female' => 'Female',
+                    ])
+                    ->required(),
                 DatePicker::make('date_of_birth')
                     // ->label('Geboortedatum')
                     ->required()
@@ -59,19 +66,23 @@ class AnimalResource extends Resource
                 Select::make('owner_id')
                     // ->label('Eigenaar')
                     ->relationship('owner', 'first_name')
-                    // ->formatStateUsing(function ($state, Patient $patient) {
-                    //     return $patient->owner->Voornaam . ' ' . $patient->owner->Tussenvoegsel . ' ' . $patient->owner->Achternaam;
-                    // })
+                    ->formatStateUsing(function (Animal $animal) {
+                        // $owner = $animal->owner;
+                        if ($animal->owner) {
+                            return $animal->owner->first_name . ' ' . $animal->owner->preposition . ' ' . $animal->owner->last_name;
+                        } else {
+                            return null; // Of een fallback-waarde die je wilt weergeven als de eigenaar niet beschikbaar is
+                        }
+                    })
                     ->searchable()
                     ->preload()
-                    ->required(),
+                    ->required(),                
                 Select::make('status')
                 //   ->label('Status')
                   ->placeholder('Select a status')
                   ->options([
-                      'gezond' => 'Gezond',
-                      'in behandeling' => 'In behandeling',
-                      'afgemeld' => 'Afgemeld',
+                      'alive' => 'Alive',
+                      'death' => 'Death',
                   ])
                   ->required(),
                 Section::make('Type & Breed')
