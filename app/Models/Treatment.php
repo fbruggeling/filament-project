@@ -22,11 +22,6 @@ class Treatment extends Model
         'price' => MoneyCast::class,
     ];
 
-    public function animals(): BelongsToMany
-    {
-        return $this->belongsToMany(Animal::class, 'animal-treatment')->withTimestamps();
-    }
-
     public function consults(): BelongsToMany
     {
         return $this->belongsToMany(Consult::class, 'consult-treatment')->withTimestamps();

@@ -44,12 +44,11 @@ class ConsultResource extends Resource
                         ->placeholder('Select a Owner')
                         ->preload()
                         ->required(),
-                    // Select::make('animal_id')
-                    //     ->relationship('animal', 'name')
-                    //     ->placeholder('Select a animal')
-                    //     ->preload()
-                    //     ->multiple()
-                    //     ->required(),
+                    Select::make('animal_id')
+                        ->relationship('animal', 'name')
+                        ->placeholder('Select a animal')
+                        ->preload()
+                        ->required(),
                 ]),
             ]);
     }
@@ -82,7 +81,6 @@ class ConsultResource extends Resource
     {
         return [
             RelationManagers\TreatmentsRelationManager::class,
-            RelationManagers\AnimalsRelationManager::class,
         ];
     }
 

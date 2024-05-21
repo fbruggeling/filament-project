@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\ConsultResource\RelationManagers;
+namespace App\Filament\Resources\OwnerResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -10,7 +10,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class AnimalsRelationManager extends RelationManager
+class AnimalRelationManager extends RelationManager
 {
     protected static string $relationship = 'animals';
 
@@ -30,32 +30,23 @@ class AnimalsRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    // ->label('Naam')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type.type'),
-                    // ->label('Type'),
-                Tables\Columns\TextColumn::make('breed.breed'),
-                    // ->label('Ras/Soort'),
+                Tables\Columns\TextColumn::make('type.type')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('breed.breed')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('date_of_birth')
-                    // ->label('Geboortedatum')
                     ->sortable(),
-                // Tables\Columns\TextColumn::make('owner.id')
-                //     // ->label('Eigenaar')
-                //     ->formatStateUsing(function ($state, Animal $patient) {
-                //         return $patient->owner->first_name . ' ' . $patient->owner->preposition . ' ' . $patient->owner->last_name;
-                //     }),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                // Tables\Actions\CreateAction::make(),
                 Tables\Actions\AttachAction::make(),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
-                // Tables\Actions\DeleteAction::make(),
-                Tables\Actions\DetachAction::make()
+                Tables\Actions\DetachAction::make(),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

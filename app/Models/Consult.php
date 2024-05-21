@@ -13,9 +13,9 @@ class Consult extends Model
 {
     use HasFactory;
 
-    public function animals(): BelongsToMany 
+    public function animal(): BelongsTo 
     {
-        return $this->belongsToMany(Animal::class, 'animal-consult');
+        return $this->belongsTo(Animal::class);
     }
 
     public function owner(): BelongsTo
