@@ -6,6 +6,7 @@ use App\Filament\Resources\ConsultResource\Pages;
 use App\Filament\Resources\ConsultResource\RelationManagers;
 use App\Models\Consult;
 use App\Models\Owner;
+use App\Models\Animal;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -59,18 +60,22 @@ class ConsultResource extends Resource
                     Select::make('owner_id')
                         // Making the relationship between consult and owner
                         ->relationship('owner', 'first_name')
+                        ->options(Owner::pluck('id'))
+                        ->placeholder('Select a Owner')
                         // Making sure the full name is shown in the select field
                         ->options(function () {
                             return Owner::withFullName()->get()->pluck('full_name', 'id');
                         })
-                        ->placeholder('Select a Owner')
                         ->preload()
+                        ->live()
                         ->required(),
                     Select::make('animal_id')
                         // Making the relationship between consult and animal
                         ->relationship('animal', 'name')
                         // Putting a placeholder in the select field
                         ->placeholder('Select a animal')
+                        ->options(fn(forms\Get $get) => Animal::where('owner_id', $get('owner_id'))->pluck('name', 'id'))
+                        ->disabled(fn(forms\Get $get) : bool => ! filled($get('owner_id')))
                         ->preload()
                         ->required(),
                 ]),
