@@ -23,8 +23,8 @@ class Owner extends Model
         return $this->hasMany(Consult::class);
     }
 
-    public function option(): BelongsToMany
+    public function option(): HasMany
     {
-        return $this->belongsToMany(Option::class, 'owner-option');
+        return $this->hasMany(Option::class);
     }
 }

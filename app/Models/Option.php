@@ -4,24 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Option extends Model
 {
     use HasFactory;
 
-    public function animal(): BelongsToMany
+    public function animal(): BelongsTo
     {
-        return $this->belongsToMany(Animal::class, 'animal-option');
+        return $this->belongsTo(Animal::class);
     }
 
-    public function owner(): BelongsToMany
+    public function owner(): BelongsTo
     {
-        return $this->belongsToMany(Owner::class, 'owner-option');
+        return $this->belongsTo(Owner::class);
     }
 
-    public function consult(): BelongsToMany
+    public function consult(): BelongsTo
     {
-        return $this->belongsToMany(Consult::class, 'consult-option');
+        return $this->belongsTo(Consult::class);
     }
 }

@@ -23,11 +23,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(UserSeeder::class);
+        $this->call(OptionSeeder::class);
         $this->call(OwnerSeeder::class);
         $this->call(TreatmentSeeder::class);
         $this->call(TypeSeeder::class);
         $this->call(BreedSeeder::class);
         $this->call(AnimalSeeder::class);
-        $this->call(OptionSeeder::class);
+        
     }
 }

@@ -40,11 +40,17 @@ class ConsultResource extends Resource
                 Datepicker::make('date')
                     ->required(),
                 Select::make('status')
-                    ->options([
-                        'planned' => 'Planned',
-                        'in treatment' => 'In Treatment',
-                        'done' => 'Done'
-                    ])
+                    ->options(function () {
+                        return \App\Models\Option::where('optionname', 'OwnerGender')
+                            ->pluck('optionvalue', 'optionvalue')
+                            ->toArray();
+                    })
+                    // Hardcoded Options
+                    // ->options([
+                    //     'planned' => 'Planned',
+                    //     'in treatment' => 'In Treatment',
+                    //     'done' => 'Done'
+                    // ])
                     ->required(),
                 Section::make('Details')
                 ->schema([

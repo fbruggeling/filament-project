@@ -41,10 +41,16 @@ class AnimalResource extends Resource
                     ->columnSpan('full'),
                 Select::make('gender')
                     ->placeholder('Select a gender')
-                    ->options([
-                        'male' => 'Male',
-                        'female' => 'Female',
-                    ])
+                    ->options(function () {
+                        return \App\Models\Option::where('optionname', 'AnimalGender')
+                            ->pluck('optionvalue', 'optionvalue')
+                            ->toArray();
+                    })
+                    // Hardcoded Options
+                    // ->options([
+                    //     'male' => 'Male',
+                    //     'female' => 'Female',
+                    // ])
                     ->required(),
                 DatePicker::make('date_of_birth')
                     // ->label('Geboortedatum')
@@ -59,10 +65,16 @@ class AnimalResource extends Resource
                 Select::make('status')
                 //   ->label('Status')
                   ->placeholder('Select a status')
-                  ->options([
-                      'alive' => 'Alive',
-                      'death' => 'Death',
-                  ])
+                  ->options(function () {
+                    return \App\Models\Option::where('optionname', 'AnimalStatus')
+                        ->pluck('optionvalue', 'optionvalue')
+                        ->toArray();
+                })
+                // Hardcoded Options
+                //   ->options([
+                //       'alive' => 'Alive',
+                //       'death' => 'Death',
+                //   ])
                   ->required(),
                 Section::make('Type & Breed')
                 ->schema([

@@ -42,8 +42,10 @@ class OwnerResource extends Resource
                     ->label('Gender')
                     ->placeholder('Select a gender')
                     // Options from options table
-                    ->relationship('option', 'optionvalue', function ($query) {
-                        $query->where('optionname', '=', 'OwnerGender');
+                    ->options(function () {
+                        return \App\Models\Option::where('optionname', 'OwnerGender')
+                            ->pluck('optionvalue', 'optionvalue')
+                            ->toArray();
                     })
                     // Hardcoded Options
                     // ->options([
@@ -89,6 +91,8 @@ class OwnerResource extends Resource
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('gender')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone_number')
                     ->searchable(),

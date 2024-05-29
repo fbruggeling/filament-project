@@ -33,8 +33,8 @@ class Animal extends Model
         return $this->belongsTo(Breed::class);
     }
 
-    public function option(): BelongsToMany
+    public function option(): HasMany
     {
-        return $this->belongsToMany(Option::class, 'animal-option');
+        return $this->hasMany(Option::class);
     }
 }

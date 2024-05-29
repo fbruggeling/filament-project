@@ -18,8 +18,14 @@ class AnimalSeeder extends Seeder
         $voornamen = ['Buddy', 'Luna', 'Max', 'Bella', 'Rocky', 'Molly', 'Charlie', 'Daisy', 'Bailey', 'Lucy', 'Jack', 'Coco', 'Simba', 'Lola', 'Toby', 'Lizzy', 'Sam', 'Gizmo', 'Misty', 'Oscar'];
 
         // Array van willekeurige statussen
-        $statussen = ['alive', 'death']; // changed to lowercase
-        $genders = ['male', 'female'];
+        $statussen = DB::table('options')
+            ->where('optionname', 'AnimalStatus')
+            ->pluck('optionvalue')
+            ->toArray(); // changed to lowercase
+        $genders = DB::table('options')
+            ->where('optionname', 'AnimalGender')
+            ->pluck('optionvalue')
+            ->toArray();
 
         // Willekeurige geboortedata genereren (tussen 1 en 15 jaar geleden)
         $startDate = strtotime("-15 years");

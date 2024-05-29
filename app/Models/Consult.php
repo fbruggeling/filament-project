@@ -28,8 +28,8 @@ class Consult extends Model
         return $this->belongsToMany(Treatment::class, 'consult-treatment');
     }
 
-    public function option(): BelongsToMany
+    public function option(): HasMany
     {
-        return $this->belongsToMany(Option::class, 'consult-option');
+        return $this->hasMany(Option::class);
     }
 }

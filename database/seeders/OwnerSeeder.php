@@ -75,6 +75,12 @@ class OwnerSeeder extends Seeder
             $addressKeysWithLetter = [$addressKeysWithLetter];
         }
 
+        // Haal de mogelijke genders uit de database
+        $genders = DB::table('options')
+            ->where('optionname', 'OwnerGender')
+            ->pluck('optionvalue')
+            ->toArray();
+
         // Functie om een willekeurig e-mailadres te genereren
         function generateRandomEmail($firstName, $lastName)
         {
@@ -102,12 +108,8 @@ class OwnerSeeder extends Seeder
             // Voeg tussenvoegsel toe aan de achternaam
             $randomAchternaam = $achternamen[array_rand($achternamen)];
 
-            // Bepaal het geslacht op basis van de kans
-            if ($gender === 'male') {
-                $randomGender = mt_rand(1, 100) <= 90 ? 'male' : 'other';
-            } elseif ($gender === 'female') {
-                $randomGender = mt_rand(1, 100) <= 90 ? 'female' : 'other';
-            }
+            // Willekeurig geslacht kiezen uit de database opties
+            $randomGender = $genders[array_rand($genders)];
 
             // Willekeurig tussenvoegsel kiezen
             $randomPreposition = $prepositions[array_rand($prepositions)];
