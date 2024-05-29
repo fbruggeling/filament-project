@@ -7,6 +7,7 @@ use App\Filament\Resources\AnimalResource\RelationManagers;
 use App\Models\Breed;
 use App\Models\Type;
 use App\Models\Animal;
+use App\Models\Owner;
 use Closure;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -59,6 +60,9 @@ class AnimalResource extends Resource
                 Select::make('owner_id')
                     // ->label('Eigenaar')
                     ->relationship('owner', 'first_name')
+                    ->options(function () {
+                        return Owner::withFullName()->get()->pluck('full_name', 'id');
+                    })
                     ->searchable()
                     ->preload()
                     ->required(),                
@@ -127,11 +131,12 @@ class AnimalResource extends Resource
                 TextColumn::make('date_of_birth')
                     // ->label('Geboortedatum')
                     ->sortable(),
-                TextColumn::make('owner.id')
-                    // ->label('Eigenaar')
+                TextColumn::make('owner_id')
+                    ->label('Owner')
                     ->formatStateUsing(function ($state, Animal $patient) {
                         return $patient->owner->first_name . ' ' . $patient->owner->preposition . ' ' . $patient->owner->last_name;
-                    }),
+                    })
+                    ->sortable(),
             ])
             ->filters([
                 SelectFilter::make('type.type'),

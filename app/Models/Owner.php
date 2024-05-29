@@ -13,6 +13,8 @@ class Owner extends Model
 {
     use HasFactory;
 
+    // protected $appends = ['full_name'];
+
     public function animals(): HasMany
     {
         return $this->hasMany(Animal::class);
@@ -26,5 +28,17 @@ class Owner extends Model
     public function option(): HasMany
     {
         return $this->hasMany(Option::class);
+    }
+
+    // Accessor voor volledige naam
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->preposition} {$this->last_name}";
+    }
+
+    // Scope om volledige naam te selecteren
+    public function scopeWithFullName($query)
+    {
+        return $query->selectRaw("*, CONCAT(first_name, ' ', preposition, ' ', last_name) as full_name");
     }
 }

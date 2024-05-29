@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ConsultResource\Pages;
 use App\Filament\Resources\ConsultResource\RelationManagers;
 use App\Models\Consult;
+use App\Models\Owner;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -40,6 +41,7 @@ class ConsultResource extends Resource
                 Datepicker::make('date')
                     ->required(),
                 Select::make('status')
+                    // Options from database table options
                     ->options(function () {
                         return \App\Models\Option::where('optionname', 'ConsultStatus')
                             ->pluck('optionvalue', 'optionvalue')
@@ -55,12 +57,19 @@ class ConsultResource extends Resource
                 Section::make('Details')
                 ->schema([
                     Select::make('owner_id')
+                        // Making the relationship between consult and owner
                         ->relationship('owner', 'first_name')
+                        // Making sure the full name is shown in the select field
+                        ->options(function () {
+                            return Owner::withFullName()->get()->pluck('full_name', 'id');
+                        })
                         ->placeholder('Select a Owner')
                         ->preload()
                         ->required(),
                     Select::make('animal_id')
+                        // Making the relationship between consult and animal
                         ->relationship('animal', 'name')
+                        // Putting a placeholder in the select field
                         ->placeholder('Select a animal')
                         ->preload()
                         ->required(),
@@ -79,7 +88,8 @@ class ConsultResource extends Resource
                         return $patient->owner->first_name . ' ' . $patient->owner->preposition . ' ' . $patient->owner->last_name;
                     }),
                 Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
