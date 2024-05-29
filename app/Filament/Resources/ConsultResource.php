@@ -41,7 +41,7 @@ class ConsultResource extends Resource
                     ->required(),
                 Select::make('status')
                     ->options(function () {
-                        return \App\Models\Option::where('optionname', 'OwnerGender')
+                        return \App\Models\Option::where('optionname', 'ConsultStatus')
                             ->pluck('optionvalue', 'optionvalue')
                             ->toArray();
                     })
@@ -78,6 +78,8 @@ class ConsultResource extends Resource
                     ->formatStateUsing(function ($state, Consult $patient) {
                         return $patient->owner->first_name . ' ' . $patient->owner->preposition . ' ' . $patient->owner->last_name;
                     }),
+                Tables\Columns\TextColumn::make('status')
+                    ->searchable(),
             ])
             ->filters([
                 //
