@@ -12,6 +12,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DatePicker;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Forms\Components\Section;
 // use Filament\Resources\Concerns\Translatable;
 
 class TreatmentResource extends Resource
@@ -36,21 +44,21 @@ class TreatmentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('treatment')
+                TextInput::make('treatment')
                     // ->label('Behandeling')
                     ->required()
                     ->maxLength(255)
                     ->columnSpan('full'),
-                Forms\Components\Textarea::make('notes')
+                Textarea::make('notes')
                     // ->label('Beschrijving')
                     ->maxLength(65535)
                     ->columnSpan('full'),
-                Forms\Components\TextInput::make('price')
+                TextInput::make('price')
                     // ->label('Prijs')
                     ->numeric()
                     ->prefix('€')
                     ->maxValue(42949672.95),
-                Forms\Components\TextInput::make('duration')
+                TextInput::make('duration')
                     // ->label('Behandeltijd')
                     ->suffix('Minutes')
                     ->numeric()
@@ -62,18 +70,18 @@ class TreatmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('treatment'),
+                TextColumn::make('treatment'),
                     // ->label('Behandeling'),
-                Tables\Columns\TextColumn::make('price')
+                TextColumn::make('price')
                     // ->label('Prijs')
                     ->money('EUR')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('duration')
+                TextColumn::make('duration')
                     // ->label('Behandeltijd')
                     ->suffix(' Minutes')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     // ->label('Aangemaakt op')
                     ->dateTime(),
             ])

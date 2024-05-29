@@ -28,5 +28,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeSeeder::class);
         $this->call(BreedSeeder::class);
         $this->call(AnimalSeeder::class);
+        $this->call(OptionSeeder::class);
     }
 }

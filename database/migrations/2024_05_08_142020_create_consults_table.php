@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('notes');
+            $table->date('date');
+            $table->string('status');
             $table->foreignId('owner_id')->constrained('owners')->cascadeOnDelete();
             $table->foreignId('animal_id')->constrained('animals')->cascadeOnDelete();
+            // $table->foreignId('option_id')->constrained('options')->cascadeOnDelete();
             $table->timestamps();
         });
     }

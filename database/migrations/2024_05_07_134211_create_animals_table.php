@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('owner_id')->constrained('owners')->cascadeOnDelete();
             $table->foreignId('type_id')->constrained('types')->cascadeOnDelete();
             $table->foreignId('breed_id')->constrained('breeds')->cascadeOnDelete();
+            // $table->foreignId('option_id')->constrained('options')->cascadeOnDelete();
             $table->timestamps();
         });
     }

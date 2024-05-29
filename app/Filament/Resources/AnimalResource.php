@@ -52,7 +52,7 @@ class AnimalResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->columnSpan('full'),
-                    Select::make('gender')
+                Select::make('gender')
                     ->placeholder('Select a gender')
                     ->options([
                         'male' => 'Male',
@@ -66,14 +66,6 @@ class AnimalResource extends Resource
                 Select::make('owner_id')
                     // ->label('Eigenaar')
                     ->relationship('owner', 'first_name')
-                    ->formatStateUsing(function (Animal $animal) {
-                        // $owner = $animal->owner;
-                        if ($animal->owner) {
-                            return $animal->owner->first_name . ' ' . $animal->owner->preposition . ' ' . $animal->owner->last_name;
-                        } else {
-                            return null; // Of een fallback-waarde die je wilt weergeven als de eigenaar niet beschikbaar is
-                        }
-                    })
                     ->searchable()
                     ->preload()
                     ->required(),                
@@ -160,7 +152,7 @@ class AnimalResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\TreatmentsRelationManager::class,
+            //
         ];
     }
 

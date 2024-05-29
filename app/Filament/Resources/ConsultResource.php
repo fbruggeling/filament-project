@@ -37,6 +37,15 @@ class ConsultResource extends Resource
                 Textarea::make('notes')
                     ->required()
                     ->columnSpan('full'),
+                Datepicker::make('date')
+                    ->required(),
+                Select::make('status')
+                    ->options([
+                        'planned' => 'Planned',
+                        'in treatment' => 'In Treatment',
+                        'done' => 'Done'
+                    ])
+                    ->required(),
                 Section::make('Details')
                 ->schema([
                     Select::make('owner_id')

@@ -26,18 +26,7 @@ class OwnerResource extends Resource
     protected static ?string $model = Owner::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    
-    // protected static ?string $title = 'Eigenaren';
 
-    // protected static ?string $navigationLabel = 'Eigenaren';
-
-    // protected static ?string $slug = 'eigenaren';
-
-    // protected ?string $heading = 'Eigenaren';
-
-    // protected ?string $subheading = 'Eigenaren';
-
-    // use Translatable;
 
     public static function form(Form $form): Form
     {
@@ -47,17 +36,23 @@ class OwnerResource extends Resource
                     ->required()
                     ->maxLength(255),
                 TextInput::make('preposition')
-                    ->maxLength(3),
+                    ->maxLength(7),
                 TextInput::make('last_name')
                     ->required()
                     ->maxLength(255),
                 Select::make('gender')
+                    ->label('Gender')
                     ->placeholder('Select a gender')
-                    ->options([
-                        'male' => 'Male',
-                        'female' => 'Female',
-                        'other' => 'Other',
-                    ])
+                    // Options from options table
+                    ->relationship('option', 'optionvalue', function ($query) {
+                        $query->where('optionname', '=', 'OwnerGender');
+                    })
+                    // Hardcoded Options
+                    // ->options([
+                    //     'male' => 'Male',
+                    //     'female' => 'Female',
+                    //     'other' => 'Other'
+                    // ])
                     ->required(),
                 TextInput::make('email')
                     ->required()
@@ -90,6 +85,7 @@ class OwnerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
                     ->label('Name')
+                    // Formatting for whole name in 1 column instead of 3 seperate columns
                     ->formatStateUsing(function ($state, Owner $owner) {
                         return $owner->first_name . ' ' . $owner->preposition . ' ' . $owner->last_name;
                     })
@@ -123,6 +119,7 @@ class OwnerResource extends Resource
     public static function getRelations(): array
     {
         return [
+            // Relationmanager for animal relations
             RelationManagers\AnimalRelationManager::class,
         ];
     }
@@ -135,14 +132,4 @@ class OwnerResource extends Resource
             'edit' => Pages\EditOwner::route('/{record}/edit'),
         ];
     }
-
-    // public static function getModelLabel(): string
-    // {
-    //     return __('Owner');
-    // }
-
-    // public static function getPluralModelLabel(): string
-    // {
-    //     return __('Owners');
-    // }
 }

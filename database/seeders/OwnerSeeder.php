@@ -13,11 +13,32 @@ class OwnerSeeder extends Seeder
      */
     public function run()
     {
-        // Array van willekeurige Nederlandse voornamen
-        $voornamen = ['Daan', 'Emma', 'Lucas', 'Sophie', 'Sem', 'Julia', 'Finn', 'Mila', 'Luuk', 'Zoë'];
+        // Array van willekeurige Nederlandse voornamen met geslacht
+        $namen = [
+            ['Daan', 'male'],
+            ['Emma', 'female'],
+            ['Lucas', 'male'],
+            ['Sophie', 'female'],
+            ['Sem', 'male'],
+            ['Julia', 'female'],
+            ['Finn', 'male'],
+            ['Mila', 'female'],
+            ['Luuk', 'male'],
+            ['Zoë', 'female'],
+            ['Noah', 'male'],
+            ['Tess', 'female'],
+            ['Levi', 'male'],
+            ['Sara', 'female'],
+            ['Bram', 'male'],
+            ['Lotte', 'female'],
+            ['Max', 'male']
+        ];
 
-        // Array van willekeurige Nederlandse achternamen
-        $achternamen = ['de Jong', 'Jansen', 'de Vries', 'van den Berg', 'van Dijk', 'Bakker', 'Visser', 'Smit', 'Meijer', 'de Boer'];
+        // Array van willekeurige Nederlandse achternamen zonder tussenvoegsels
+        $achternamen = ['Jong', 'Jansen', 'Vries', 'Berg', 'Dijk', 'Bakker', 'Visser', 'Smit', 'Meijer', 'Boer', 'Mulder', 'Bos', 'Vos', 'Peters', 'Hendriks', 'Kramer', 'Leeuwen'];
+
+        // Array van tussenvoegsels
+        $prepositions = ['', 'van', 'van der', 'van den', 'van de', 'de'];
 
         // Willekeurige adressen genereren
         $addresses = [
@@ -30,21 +51,66 @@ class OwnerSeeder extends Seeder
             ['Maastricht', 'Vrijthof', '34', '6789MN'],
             ['Haarlem', 'Grote Houtstraat', '21', '0123OP'],
             ['Breda', 'Wilhelminastraat', '67', '4567QR'],
-            ['Amersfoort', 'Langestraat', '90', '8901ST']
+            ['Amersfoort', 'Langestraat', '90', '8901ST'],
+            ['Nijmegen', 'Molenstraat', '13', '1011AA'],
+            ['Leiden', 'Breestraat', '22', '1022BB'],
+            ['Delft', 'Oude Delft', '33', '1033CC'],
+            ['Tilburg', 'Heuvelstraat', '44', '1044DD'],
+            ['Arnhem', 'Jansstraat', '55', '1055EE'],
+            ['Zwolle', 'Melkmarkt', '66', '1066FF'],
+            ['Apeldoorn', 'Hoofdstraat', '77', '1077GG']
         ];
 
-        $genders = [
-            'male', 'female', 'other'
-        ];
+        // Set van letters voor huisnummers
+        $letters = range('A', 'H');
 
         // Houd bij welke adressen al gebruikt zijn
         $usedAddresses = [];
 
-        // Loop om 10 willekeurige eigenaren in te voegen
-        for ($i = 0; $i < 10; $i++) {
-            $randomVoornaam = $voornamen[array_rand($voornamen)];
+        // Houd bij welke huisnummers een letter moeten hebben
+        $addressKeysWithLetter = array_rand($addresses, mt_rand(2, 3));
+
+        // Als slechts één adres is geselecteerd, maak er een array van
+        if (!is_array($addressKeysWithLetter)) {
+            $addressKeysWithLetter = [$addressKeysWithLetter];
+        }
+
+        // Functie om een willekeurig e-mailadres te genereren
+        function generateRandomEmail($firstName, $lastName)
+        {
+            $domains = ['example.com', 'email.com', 'test.com'];
+            $patterns = [
+                strtolower($firstName) . '.' . strtolower($lastName),
+                strtolower($firstName) . mt_rand(100, 999),
+                strtolower($lastName) . mt_rand(100, 999),
+                strtolower($firstName[0]) . '.' . strtolower($lastName),
+                strtolower($firstName) . '_' . strtolower($lastName),
+                substr(strtolower($firstName), 0, 3) . mt_rand(1000, 9999),
+                substr(strtolower($lastName), 0, 3) . mt_rand(1000, 9999)
+            ];
+            do {
+                $email = mb_convert_encoding($patterns[array_rand($patterns)] . '@' . $domains[array_rand($domains)], 'UTF-8');
+            } while (mb_strlen($email) < 8); // Zorg ervoor dat het e-mailadres minstens 8 tekens lang is
+            return $email;
+        }
+
+        // Loop om 17 willekeurige eigenaren in te voegen
+        for ($i = 0; $i < 17; $i++) {
+            // Willekeurige voornaam en geslacht selecteren
+            [$randomVoornaam, $gender] = $namen[$i];
+
+            // Voeg tussenvoegsel toe aan de achternaam
             $randomAchternaam = $achternamen[array_rand($achternamen)];
-            $randomgender= $genders[array_rand($genders)];
+
+            // Bepaal het geslacht op basis van de kans
+            if ($gender === 'male') {
+                $randomGender = mt_rand(1, 100) <= 90 ? 'male' : 'other';
+            } elseif ($gender === 'female') {
+                $randomGender = mt_rand(1, 100) <= 90 ? 'female' : 'other';
+            }
+
+            // Willekeurig tussenvoegsel kiezen
+            $randomPreposition = $prepositions[array_rand($prepositions)];
 
             // Controleer of het adres al in gebruik is
             do {
@@ -55,16 +121,22 @@ class OwnerSeeder extends Seeder
             // Voeg het adres toe aan de lijst van gebruikte adressen
             $usedAddresses[] = $randomAddressKey;
 
+            // Voeg een letter toe aan het huisnummer als dit adres is geselecteerd
+            $houseNumber = $randomAddress[2];
+            if (in_array($randomAddressKey, $addressKeysWithLetter)) {
+                $houseNumber .= $letters[array_rand($letters)];
+            }
+
             DB::table('owners')->insert([
                 'first_name' => $randomVoornaam,
-                'preposition' => null, // Hier kan je logica toevoegen om een willekeurig tussenvoegsel te kiezen
+                'preposition' => $randomPreposition,
                 'last_name' => $randomAchternaam,
-                'gender' => $randomgender,
-                'email' => strtolower($randomVoornaam) . '@example.com',
+                'gender' => $randomGender,
+                'email' => generateRandomEmail($randomVoornaam, $randomAchternaam), // Genereer een willekeurig e-mailadres
                 'phone_number' => '06' . mt_rand(10000000, 99999999), // Genereer een willekeurig telefoonnummer
                 'city' => $randomAddress[0],
                 'street' => $randomAddress[1],
-                'house_number' => $randomAddress[2],
+                'house_number' => $houseNumber, // Huisnummer met mogelijk een letter
                 'postal_code' => $randomAddress[3],
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -13,10 +13,6 @@ class Breed extends Model
 {
     use HasFactory;
 
-    // use HasTranslations;
-
-    // public $translatable = ['breed, type_id'];
-
     public function type(): BelongsTo
     {
         return $this->belongsTo(Type::class);

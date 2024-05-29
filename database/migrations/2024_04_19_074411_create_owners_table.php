@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('street');
             $table->string('house_number');
             $table->string('postal_code');
+            // $table->foreignId('option_id')->constrained('options')->cascadeOnDelete();
             $table->timestamps();
         });
     }
