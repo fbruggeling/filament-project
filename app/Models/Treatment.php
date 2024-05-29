@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Casts\MoneyCast;
-// use Spatie\Translatable\HasTranslations;
+
 
 class Treatment extends Model
 {

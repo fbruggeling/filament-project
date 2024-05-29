@@ -19,7 +19,6 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Section;
-// use Filament\Resources\Concerns\Translatable;
 
 class OwnerResource extends Resource
 {
