@@ -11,10 +11,6 @@ class Type extends Model
 {
     use HasFactory;
 
-    // use HasTranslations;
-
-    // public $translatable = 'type';
-
     public function breed(): HasMany
     {
         return $this->hasMany(Breed::class);

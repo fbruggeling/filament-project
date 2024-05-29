@@ -31,18 +31,6 @@ class AnimalResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    // protected static ?string $title = 'Dieren';
-
-    // protected static ?string $navigationLabel = 'Dieren';
-
-    // protected static ?string $slug = 'dieren';
-
-    // protected ?string $heading = 'Dieren';
-
-    // protected ?string $subheading = 'Dieren';
-
-    // use Translatable;
-
     public static function form(Form $form): Form
     {
         return $form
@@ -164,14 +152,4 @@ class AnimalResource extends Resource
             'edit' => Pages\EditAnimal::route('/{record}/edit'),
         ];
     }
-
-    // public static function getModelLabel(): string
-    // {
-    //     return __('Animal');
-    // }
-
-    // public static function getPluralModelLabel(): string
-    // {
-    //     return __('Animals');
-    // }
 }

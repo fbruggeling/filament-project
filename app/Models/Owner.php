@@ -14,10 +14,6 @@ class Owner extends Model
 {
     use HasFactory;
 
-    // use HasTranslations;
-
-    // public $translatable = ['first_name, preposition, last_name, email, phone_number, city, street, house_number, postal_code'];
-
     public function animals(): HasMany
     {
         return $this->hasMany(Animal::class);

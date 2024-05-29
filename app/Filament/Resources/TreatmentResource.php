@@ -28,18 +28,6 @@ class TreatmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    // protected static ?string $title = 'Behandelingen';
-
-    // protected static ?string $navigationLabel = 'Behandelingen';
-
-    // protected static ?string $slug = 'behandelingen';
-
-    // protected ?string $heading = 'Behandelingen';
-
-    // protected ?string $subheading = 'Behandelingen';
-
-    // use Translatable;
-
     public static function form(Form $form): Form
     {
         return $form
